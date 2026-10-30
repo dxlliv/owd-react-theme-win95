@@ -1,0 +1,217 @@
+/*
+ * @owdproject/react-theme-win95 — theme layout & app styles.
+ * Visual primitives come from @react95/core (via @owdproject/react-kit-react95).
+ */
+
+.owd-shell {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+}
+
+.owd-shell__desktop {
+  position: absolute;
+  inset: 0 0 28px 0;
+  overflow: hidden;
+}
+
+.owd-shell__watermark {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: bold;
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.35);
+  pointer-events: none;
+}
+
+.owd-shell__startmenu {
+  position: absolute;
+  left: 2px;
+  bottom: 28px;
+  z-index: 100000;
+}
+
+/* ----------------------------------------------------------- System bar */
+
+.owd-taskbar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px;
+  z-index: 90000;
+  background: var(--r95-color-material, #c3c7cb);
+  box-shadow:
+    inset 1px 1px 0 var(--r95-color-borderLightest, #fff),
+    inset -1px -1px 0 var(--r95-color-borderDark, #868a8e);
+}
+
+.owd-taskbar__start {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: bold;
+  flex: 0 0 auto;
+}
+
+.owd-taskbar__start.is-active {
+  padding-top: 2px;
+  padding-left: 2px;
+}
+
+.owd-taskbar__start-label {
+  line-height: 1;
+}
+
+.owd-taskbar__tasks {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  background: transparent;
+  box-shadow: none;
+  overflow: hidden;
+}
+
+.owd-task {
+  display: inline-flex;
+  align-items: center;
+  min-width: 110px;
+  max-width: 168px;
+  overflow: hidden;
+}
+
+.owd-task.is-active {
+  box-shadow:
+    inset 1px 1px 0 var(--r95-color-borderDark, #868a8e),
+    inset -1px -1px 0 var(--r95-color-borderLightest, #fff);
+  background-color: var(--r95-color-borderLight, #d2d2d2);
+}
+
+.owd-task__label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.owd-taskbar__tray {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  padding: 0 6px;
+  background: transparent;
+  box-shadow: none;
+}
+
+.owd-taskbar__clock {
+  padding: 0 2px;
+}
+
+/* ------------------------------------------------------------ Start menu */
+
+.owd-startmenu {
+  display: flex;
+  background: var(--r95-color-material, #c3c7cb);
+  border: 2px solid;
+  border-color: var(--r95-color-borderLight) var(--r95-color-borderDarkest)
+    var(--r95-color-borderDarkest) var(--r95-color-borderLight);
+  box-shadow: inset 1px 1px 0 var(--r95-color-borderLightest);
+}
+
+.owd-startmenu__rail {
+  width: 26px;
+  background: linear-gradient(180deg, #000e7a, #1084d0);
+  color: #fff;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 8px 0;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.owd-startmenu__list {
+  border: 0;
+  box-shadow: none;
+  background: transparent;
+  min-width: 190px;
+}
+
+/* ------------------------------------------------------- App: About box */
+
+.owd-about {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  height: 100%;
+  padding: 4px;
+  user-select: text;
+}
+
+.owd-about__banner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.owd-about__small {
+  color: #404040;
+}
+
+.owd-about__divider {
+  width: 100%;
+  border: 0;
+  border-top: 1px solid var(--r95-color-borderDark);
+  border-bottom: 1px solid var(--r95-color-borderLight);
+}
+
+.owd-about__text {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.owd-about__actions {
+  margin-top: auto;
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* --------------------------------------------------------- App: Notepad */
+
+.owd-notepad {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.owd-notepad__menu {
+  display: flex;
+  gap: 14px;
+  padding: 2px 6px;
+}
+
+.owd-notepad__area {
+  flex: 1 1 auto;
+  width: 100%;
+  resize: none;
+  border: 0;
+  outline: none;
+  padding: 4px;
+  background: #fff;
+  font-family: 'Lucida Console', 'Courier New', monospace;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.owd-window__empty {
+  padding: 8px;
+  color: #404040;
+}
