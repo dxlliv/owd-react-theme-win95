@@ -21,8 +21,7 @@
     "./package.json": "./package.json"
   },
   "files": [
-    "src",
-    "playground"
+    "src"
   ],
   "scripts": {
     "dev": "vite --config playground/vite.config.ts",
