@@ -1,6 +1,6 @@
 {
   "name": "@owdproject/react-theme-win95",
-  "version": "4.0.0-alpha.3",
+  "version": "4.0.0-alpha.4",
   "description": "Windows 95 theme for Open Web Desktop built with React, @owdproject/core and @owdproject/react.",
   "license": "MIT",
   "author": {
