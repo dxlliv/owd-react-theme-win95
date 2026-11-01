@@ -46,8 +46,8 @@ export function SystemBar({ apps, onStartClick, startActive }: SystemBarProps) {
 
       <Frame className="owd-taskbar__tasks">
         {windows.map((win) => {
-          const app = appById.get(win.model)
-          const title = app?.title ?? win.config.title ?? win.id
+          const app = appById.get(win.applicationId ?? '')
+          const title = win.config.title ?? app?.title ?? win.id
           const isActive = focused?.id === win.id
           return (
             <Button

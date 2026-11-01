@@ -6,15 +6,16 @@ import { DesktopRuntimeContext } from './desktop-context'
 import { DesktopWindow } from './components/DesktopWindow'
 import { SystemBar } from './components/SystemBar'
 import { StartMenuPanel } from './components/StartMenuPanel'
-import { builtinApps } from './apps'
+import { registerDesktopApps } from './applications'
 import type { DesktopApp } from './types'
 
 const SYSTEMBAR_HEIGHT = 28
+const EMPTY_APPS: DesktopApp[] = []
 
 export interface DesktopShellProps {
   /** A `@owdproject/core` Desktop instance. */
   desktop: Desktop
-  /** Applications exposed in the start menu / task bar. */
+  /** Menu entries; components/configs register with the engine on mount. */
   apps?: DesktopApp[]
   /** Centered desktop watermark text. */
   watermark?: ReactNode
@@ -25,11 +26,14 @@ export interface DesktopShellProps {
  * Composes `@owdproject/react-kit-react95` chrome with `@owdproject/react` hooks
  * and the headless `@owdproject/core` engine.
  */
-export function DesktopShell({ desktop, apps = builtinApps, watermark = 'Open Web Desktop' }: DesktopShellProps) {
+export function DesktopShell({ desktop, apps = EMPTY_APPS, watermark = 'Open Web Desktop' }: DesktopShellProps) {
   const rootRef = useRef<HTMLDivElement>(null)
   const [startOpen, setStartOpen] = useState(false)
-  const idRef = useRef(0)
   const { windows } = useWindowManager(desktop.windows)
+
+  useEffect(() => {
+    registerDesktopApps(desktop, apps)
+  }, [desktop, apps])
 
   const getWorkarea = useCallback(() => {
     const el = rootRef.current
@@ -48,19 +52,7 @@ export function DesktopShell({ desktop, apps = builtinApps, watermark = 'Open We
   const runtime = useMemo(() => ({ desktop, getWorkarea }), [desktop, getWorkarea])
 
   const launch = (app: DesktopApp) => {
-    idRef.current += 1
-    const count = windows.length
-    const size = app.defaultSize ?? { width: 480, height: 340 }
-    desktop.windows.createWindow({
-      id: `${app.id}-${idRef.current}`,
-      model: app.id,
-      applicationId: app.id,
-      config: {
-        title: app.title,
-        size,
-        position: { x: 48 + (count % 7) * 26, y: 40 + (count % 7) * 26 },
-      },
-    })
+    void desktop.applications.launch(app.id, app.entryKey, app.argument)
     setStartOpen(false)
   }
 
@@ -74,7 +66,7 @@ export function DesktopShell({ desktop, apps = builtinApps, watermark = 'Open We
           <div className="owd-shell__desktop r95-owd-desktop">
             {watermark ? <div className="owd-shell__watermark">{watermark}</div> : null}
             {activeWindows.map((win) => (
-              <DesktopWindow key={win.id} window={win} app={appById.get(win.model)} />
+              <DesktopWindow key={win.id} window={win} app={appById.get(win.applicationId ?? '')} />
             ))}
           </div>
 

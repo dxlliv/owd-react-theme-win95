@@ -3,6 +3,10 @@
  * Visual primitives come from @react95/core (via @owdproject/react-kit-react95).
  */
 
+/* The theme owns its kit: loading the theme styles also loads the kit's OWD
+   window glue, so consumers only import this single stylesheet. */
+@import '@owdproject/react-kit-react95/styles.css';
+
 .owd-shell {
   position: fixed;
   inset: 0;

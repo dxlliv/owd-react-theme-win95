@@ -11,7 +11,6 @@ export { DesktopWindow, type DesktopWindowProps } from './components/DesktopWind
 export { SystemBar, type SystemBarProps } from './components/SystemBar'
 export { StartMenuPanel, type StartMenuPanelProps } from './components/StartMenuPanel'
 export { useDesktopRuntime, DesktopRuntimeContext, type DesktopRuntime } from './desktop-context'
-export { builtinApps, AboutApp, NotepadApp } from './apps'
 export type { DesktopApp, DesktopAppRenderProps } from './types'
 
 // Re-export the kit primitives so consumers get one entry point.

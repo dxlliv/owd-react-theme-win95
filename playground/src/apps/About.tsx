@@ -1,8 +1,8 @@
 import { Computer } from '@react95/icons'
 import { Button } from '@owdproject/react-kit-react95'
-import type { DesktopAppRenderProps } from '../types'
+import type { ReactApplicationWindowProps } from '@owdproject/react'
 
-export function AboutApp({ window, desktop }: DesktopAppRenderProps) {
+export function AboutApp({ window, close }: ReactApplicationWindowProps) {
   return (
     <div className="owd-about">
       <div className="owd-about__banner">
@@ -20,7 +20,7 @@ export function AboutApp({ window, desktop }: DesktopAppRenderProps) {
         Window <code>{window.id}</code> · model <code>{window.model}</code>
       </p>
       <div className="owd-about__actions">
-        <Button onClick={() => desktop.windows.closeWindow(window.id)}>OK</Button>
+        <Button onClick={() => { void close() }}>OK</Button>
       </div>
     </div>
   )

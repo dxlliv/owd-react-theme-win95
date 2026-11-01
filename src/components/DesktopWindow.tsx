@@ -1,6 +1,6 @@
 import { useReducer, useRef, type CSSProperties } from 'react'
 import type { ResizeDirection, WindowBounds, WindowInstance, WindowState } from '@owdproject/core'
-import { useDesktopDrag, useDesktopResize, useWindowInstance } from '@owdproject/react'
+import { closeReactApplicationWindow, ReactApplicationWindow, useDesktopDrag, useDesktopResize, useWindowInstance } from '@owdproject/react'
 import { OwdWindow } from '@owdproject/react-kit-react95'
 import { useDesktopRuntime } from '../desktop-context'
 import type { DesktopApp } from '../types'
@@ -88,11 +88,10 @@ export function DesktopWindow({ window: instance, app }: DesktopWindowProps) {
   }
 
   const focus = () => desktop.windows.focusWindow(instance.id)
-  const AppComponent = app?.component
 
   return (
     <OwdWindow
-      title={app?.title ?? instance.config.title ?? instance.id}
+      title={instance.config.title ?? app?.title ?? instance.id}
       icon={app?.icon}
       active={state.focused}
       maximized={maximized}
@@ -104,6 +103,8 @@ export function DesktopWindow({ window: instance, app }: DesktopWindowProps) {
       onPointerDownCapture={focus}
       onTitlePointerDown={(event) => {
         if (event.button !== 0) return
+        // Capturing pointers from title-bar controls prevents their click action.
+        if (event.target instanceof Element && event.target.closest('button, [role="button"]')) return
         focus()
         startDrag(event.nativeEvent)
       }}
@@ -116,15 +117,15 @@ export function DesktopWindow({ window: instance, app }: DesktopWindowProps) {
         focus()
         startResize(event.nativeEvent, direction as ResizeDirection)
       }}
-      onClose={() => desktop.windows.closeWindow(instance.id)}
+      onClose={() => { void closeReactApplicationWindow(desktop, instance) }}
       onMinimize={() => instance.minimize()}
       onToggleMaximize={() => {
         if (state.maximizable === false) return
         instance.setLayout(maximized ? 'normal' : 'maximize', getWorkarea())
       }}
     >
-      {AppComponent ? (
-        <AppComponent window={instance} desktop={desktop} />
+      {instance.config.component ? (
+        <ReactApplicationWindow window={instance} desktop={desktop} />
       ) : (
         <div className="owd-window__empty">No component registered for “{instance.model}”.</div>
       )}

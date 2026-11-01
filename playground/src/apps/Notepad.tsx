@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import type { DesktopAppRenderProps } from '../types'
+import type { ReactApplicationWindowProps } from '@owdproject/react'
 
-export function NotepadApp(_props: DesktopAppRenderProps) {
+export function NotepadApp(_props: ReactApplicationWindowProps) {
   const [text, setText] = useState(
     'Hello from a React window.\r\n\r\nDrag the title bar to move me, or grab an edge to resize.',
   )
